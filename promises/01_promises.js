@@ -11,22 +11,23 @@ export function returnValuesWithPromise() {
   */
   var promise = new Promise(function (resolve, reject) {
     /*
-      Cuando ejecutamos esta pasandole un argumento, se generará el procedimiento de resolución y quienes
+      Cuando ejecutamos esta pasándole un argumento, se generará el procedimiento de resolución y quienes
       se hayan "suscrito" a través del método .then()
     */
+    // llamando al servidor si todo sale bien
     resolve('success value')
   })
 
   return promise
     // .then() retorna la misma promesa.
     .then(function (value) {
-      console.log('Valor exitoso 1', value)
+      return value
     })
     // Podemos seguir encadenando más .then()
     // ¿Ambos .then() recibirán el mismo valor?
-    // .then(function (value) {
-    //   console.log('Valor exitoso 2', value)
-    // })
+    .then(function (value) {
+      return value
+    })
 
     // si comentamos el return anterior pero concatenando los .then 
     //return promise
@@ -48,18 +49,17 @@ export function rejectValuesWithPromise() {
   return promise
     //  .catch() retorna una NUEVA promesa.
     .catch(function (error) {
-      console.log('Valor fallido 1', error.message)
+      //console.log('Valor fallido 1', error.message)
       // Una vez que se envia un valor de retorno en un .catch este ya no genera expeciones por lo tanto ahora este valor activara los callbacks en .then
       // return { 
       //   message: error.message
       // }
-      // return error
+      return error.message
     })
     //  Podemos segurir encadenando más .catch()?
-    // .then(function(value){
-    //   console.log(value);
-    //   return value
-    // })
+    /* .then(function(value){
+      return value
+    }) */
     // .catch(function (error) {
     //   console.log('Valor fallido 2', error)
     //   return { 
@@ -87,7 +87,7 @@ export function returnValuesWithRelatedPromises() {
     })
     .then(function (response) {
       console.log('Segundo resultado', response)
-      //  return response
+      return response
     })
 }
 
@@ -111,6 +111,7 @@ export function returnValuesWithParallelPromises () {
   return Promise.all(requestsList)
     .then(function (results) {
       console.log('Resolved values as array', results)
+      return results
     })
 }
 
@@ -127,11 +128,11 @@ export function returnValuesFirstOtherPromises() {
     })
   }
   var getUserInfoFromAnotherServer = function (userId) {
-    // return new Promise(function (resolve) {
-    //   setTimeout(function () {
-    //     resolve({ id: 1, name: 'Eli', serverName: 'server2' })
-    //   } , 1500)
-    // })
+    return new Promise(function (resolve) {
+      setTimeout(function () {
+        resolve({ id: 1, name: 'Eli', serverName: 'server2' })
+      } , 1500)
+    })
     return Promise.resolve(
       { id: 1, name: 'Eli', serverName: 'server2' }
     )
