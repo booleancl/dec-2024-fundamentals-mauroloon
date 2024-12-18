@@ -10,7 +10,7 @@ describe('Callbacks', () => {
   })
 
   it('02 - callback is called in iterations with arguments',() => {
-    const array = [1, 2, 3]
+    const array = [1, 2, 3, 4]
     const spy = vi.fn()
 
     forEach(array, spy)
@@ -21,6 +21,6 @@ describe('Callbacks', () => {
     // expect(spy).toHaveBeenNthCalledWith(1, 1, 0)
     // expect(spy).toHaveBeenNthCalledWith(2, 2, 1)
     // expect(spy).toHaveBeenNthCalledWith(3, 3, 2)
-    // expect(spy).toHaveBeenCalledTimes(3)
+    expect(spy).toHaveBeenCalledTimes(4)
   })
 })
